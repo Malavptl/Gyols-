@@ -1,1 +1,251 @@
-# Gyols-
+# Gyols-<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>For Gyols 💕</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: 'Pacifico', cursive;
+      background: linear-gradient(180deg, #ff758c, #ff7eb3);
+      overflow: hidden;
+      color: white;
+    }
+
+    .scene {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.05);
+    }
+
+    .card {
+      width: 100%;
+      max-width: 360px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 26px;
+      padding: 28px 22px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+
+    h1 {
+      font-size: 1.9em;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.05em;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    button {
+      width: 100%;
+      background: #ff2f68;
+      border: none;
+      color: white;
+      padding: 14px;
+      margin-top: 12px;
+      border-radius: 999px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    button:active {
+      transform: scale(0.96);
+    }
+
+    .big-heart {
+      font-size: 2.8em;
+      animation: pulse 1.3s infinite;
+      margin: 12px 0;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.25); }
+      100% { transform: scale(1); }
+    }
+
+    #noBtn {
+      position: fixed;
+      width: auto;
+      padding: 12px 22px;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -10px;
+      animation: floatUp 6s linear forwards;
+      opacity: 0.9;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(0.6); opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.3); opacity: 0; }
+    }
+
+    iframe {
+      width: 0;
+      height: 0;
+      border: none;
+    }
+  </style>
+</head>
+<body onclick="unmute()">
+
+<!-- 🎶 Bollywood Music -->
+<iframe
+  id="ytplayer"
+  src="https://www.youtube.com/embed/k8Iu5F8P3Rk?autoplay=1&mute=1&loop=1&playlist=k8Iu5F8P3Rk"
+  allow="autoplay">
+</iframe>
+
+<!-- SCENE 1 -->
+<div class="scene" id="scene1">
+  <div class="card">
+    <h1 id="question">Hey Gyols 💕</h1>
+    <p id="text">I made something cute… romantic… just for you 🥺</p>
+    <div id="options">
+      <button onclick="next()">Tell me 😘</button>
+      <button onclick="next()">I’m listening ❤️</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCENE 2 -->
+<div class="scene hidden" id="scene2">
+  <div class="card">
+    <h1>Gyols… 💘</h1>
+    <p>
+      You make my heart feel at home,  
+      my days brighter,  
+      and my smile unstoppable 💖  
+      <br><br>
+      Will you be my Valentine?
+    </p>
+    <div class="big-heart">❤️❤️❤️</div>
+    <button onclick="goToLetter()">YESSS 💖</button>
+    <button id="noBtn">No 🙈</button>
+  </div>
+</div>
+
+<!-- SCENE 3 -->
+<div class="scene hidden" id="scene3">
+  <div class="card">
+    <h1>My Gyols 💌</h1>
+    <p>
+      Loving you feels natural,  
+      choosing you feels easy,  
+      and imagining my future with you  
+      feels right 💕  
+      <br><br>
+      Thank you for being my safe place,  
+      my happiness,  
+      my favorite person ❤️  
+      <br><br>
+      Today, tomorrow, always —  
+      I choose you.
+    </p>
+    <div class="big-heart">💖💖💖</div>
+  </div>
+</div>
+
+<script>
+  let step = 0;
+  let unmuted = false;
+
+  const questions = [
+    {
+      q: "Question 1 💭",
+      t: "Who is the cutest girl in the world?",
+      a: ["Gyols 🥰", "Still Gyols ❤️"]
+    },
+    {
+      q: "Question 2 💭",
+      t: "Who owns my heart?",
+      a: ["Gyols 💖", "Only Gyols 😘"]
+    },
+    {
+      q: "Last one 💕",
+      t: "Are you ready for something important?",
+      a: ["Yes 😳", "Very ready ❤️"]
+    }
+  ];
+
+  function next() {
+    if (step < questions.length) {
+      question.innerText = questions[step].q;
+      text.innerText = questions[step].t;
+      options.innerHTML = "";
+      questions[step].a.forEach(ans => {
+        const b = document.createElement("button");
+        b.innerText = ans;
+        b.onclick = next;
+        options.appendChild(b);
+      });
+      step++;
+    } else {
+      scene1.classList.add("hidden");
+      setTimeout(() => scene2.classList.remove("hidden"), 700);
+    }
+  }
+
+  function goToLetter() {
+    scene2.classList.add("hidden");
+    setTimeout(() => scene3.classList.remove("hidden"), 700);
+  }
+
+  function unmute() {
+    if (!unmuted) {
+      ytplayer.src = ytplayer.src.replace("mute=1", "mute=0");
+      unmuted = true;
+    }
+  }
+
+  // Runaway No button (mobile friendly)
+  noBtn.addEventListener("touchstart", moveNo);
+  noBtn.addEventListener("mouseover", moveNo);
+
+  function moveNo() {
+    noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+    noBtn.style.top = Math.random() * (window.innerHeight - 100) + "px";
+  }
+
+  // Floating hearts
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerText = "❤️";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = Math.random() * 18 + 16 + "px";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 6000);
+  }, 350);
+</script>
+
+</body>
+</html>
